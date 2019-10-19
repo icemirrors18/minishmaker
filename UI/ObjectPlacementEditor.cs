@@ -1,16 +1,10 @@
-﻿using MinishMaker.Core;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
+using MinishMaker.Core;
 using MinishMaker.Core.ChangeTypes;
 using MinishMaker.Utilities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static MinishMaker.Core.RoomMetaData;
 
 namespace MinishMaker.UI
 {
@@ -18,8 +12,8 @@ namespace MinishMaker.UI
 	{
 		private int objectIndex = -1;
 		private int listIndex = -1;
-		private List<List<ObjectData>> lists = new List<List<ObjectData>>();
-		private List<ObjectData> currentList;
+		private List<List<RoomMetaData.ObjectData>> lists = new List<List<RoomMetaData.ObjectData>>();
+		private List<RoomMetaData.ObjectData> currentList;
 		private bool shouldTrigger = false;
 
 		public ObjectPlacementEditor()
@@ -179,7 +173,7 @@ namespace MinishMaker.UI
 
 			AddChange();
 			var data = new byte[16] {6,0x0F,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-			currentList.Add(new ObjectData(data,0)); //add a basic octorok
+			currentList.Add(new RoomMetaData.ObjectData(data,0)); //add a basic octorok
 			objectIndex = currentList.Count()-1;
 			SetData();
 		}
@@ -481,7 +475,7 @@ namespace MinishMaker.UI
 			else
 				change = new List3DataChange(MainWindow.currentArea, MainWindow.currentRoom.Index);
 
-			MainWindow.AddPendingChange(change);
+            Project.Instance.AddPendingChange(change);
 		}
 
 		private void prevListButton_Click( object sender, EventArgs e )

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using System.Diagnostics;
 using MinishMaker.Utilities;
 
 namespace MinishMaker.Core
@@ -96,7 +94,7 @@ namespace MinishMaker.Core
                     if (IsValidRoom(areaNum, roomNum))
                     {
                         if(IsStableRoom(areaNum, roomNum))
-                        area.Add(new Room(roomNum));
+                            area.Add(new Room(roomNum));
                     }
 
                     else break;

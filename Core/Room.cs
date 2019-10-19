@@ -1,11 +1,9 @@
-﻿using MinishMaker.UI;
-using MinishMaker.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
-using static MinishMaker.Core.RoomMetaData;
+using MinishMaker.Utilities;
 
 namespace MinishMaker.Core
 {
@@ -74,7 +72,7 @@ namespace MinishMaker.Core
 
 			if(!bg1Exists && !bg2Exists)
 			{
-				MainWindow.Notify("No layers exist for this room, the room is highly likely invalid.","Invalid Room");
+				UI.MainWindow.Notify("No layers exist for this room, the room is highly likely invalid.","Invalid Room");
 			}
 
 			Loaded = true; //do not load data a 2nd time for this room
@@ -164,7 +162,7 @@ namespace MinishMaker.Core
 			}
 			if(badTiles>0)
 			{
-				MainWindow.Notify("Found "+badTiles+" bad tiles while trying to draw them, the room may be unused.","Bad Tiles");
+				UI.MainWindow.Notify("Found "+badTiles+" bad tiles while trying to draw them, the room may be unused.","Bad Tiles");
 			}
 		}
 
@@ -459,37 +457,37 @@ namespace MinishMaker.Core
 			return new Bitmap[]{ bg1, bg2 };
 		}
 
-		public List<ChestData> GetChestData()
+		public List<RoomMetaData.ChestData> GetChestData()
 		{
 			return metadata.ChestInfo;
 		}
 
-		public void AddChestData(ChestData data)
+		public void AddChestData(RoomMetaData.ChestData data)
 		{
 			metadata.AddChestData(data);
 		}
 
-        public void RemoveChestData(ChestData data)
+        public void RemoveChestData(RoomMetaData.ChestData data)
         {
             metadata.RemoveChestData(data);
         }
 
-		public List<ObjectData> GetList1Data()
+		public List<RoomMetaData.ObjectData> GetList1Data()
 		{
 			return metadata.List1Information;
 		}
 
-		public List<ObjectData> GetList2Data()
+		public List<RoomMetaData.ObjectData> GetList2Data()
 		{
 			return metadata.List2Information;
 		}
 
-		public List<ObjectData> GetList3Data()
+		public List<RoomMetaData.ObjectData> GetList3Data()
 		{
 			return metadata.List3Information;
 		}
 
-		public List<WarpData> GetWarpData()
+		public List<RoomMetaData.WarpData> GetWarpData()
 		{
 			return metadata.WarpInformation;
 		}

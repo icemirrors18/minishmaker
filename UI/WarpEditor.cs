@@ -1,22 +1,17 @@
-﻿using MinishMaker.Core.ChangeTypes;
-using MinishMaker.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static MinishMaker.Core.RoomMetaData;
+using MinishMaker.Core;
+using MinishMaker.Core.ChangeTypes;
+using MinishMaker.Utilities;
 
 namespace MinishMaker.UI
 {
 	public partial class WarpEditor : Form
 	{
 		int warpIndex = -1;
-		private List<WarpData> warpDataList;
+		private List<RoomMetaData.WarpData> warpDataList;
 		private bool shouldTrigger = false;
 
 		public WarpEditor()
@@ -331,7 +326,7 @@ namespace MinishMaker.UI
 			warpDataList[warpIndex] = warp;
 			SetData();
 
-			MainWindow.AddPendingChange( new WarpDataChange( MainWindow.currentArea, MainWindow.currentRoom.Index ) );
+            Project.Instance.AddPendingChange( new WarpDataChange( MainWindow.currentArea, MainWindow.currentRoom.Index ) );
 		}
 
 		private void warpTypeBox_SelectedIndexChanged( object sender, EventArgs e )
@@ -346,7 +341,7 @@ namespace MinishMaker.UI
 				warp.warpType = newVal;
 				warpDataList[warpIndex] = warp;
 				SetData();
-				MainWindow.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+                Project.Instance.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
 			}
 			catch
 			{
@@ -365,7 +360,7 @@ namespace MinishMaker.UI
 				var warp = warpDataList[warpIndex];
 				warp.transitionType = newVal;
 				warpDataList[warpIndex] = warp;
-				MainWindow.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+                Project.Instance.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
 			}
 			catch
 			{
@@ -384,7 +379,7 @@ namespace MinishMaker.UI
 				var warp = warpDataList[warpIndex];
 				warp.facing = newVal;
 				warpDataList[warpIndex] = warp;
-				MainWindow.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+                Project.Instance.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
 			}
 			catch
 			{
@@ -403,7 +398,7 @@ namespace MinishMaker.UI
 				var warp = warpDataList[warpIndex];
 				warp.destXPixel = newVal;
 				warpDataList[warpIndex] = warp;
-				MainWindow.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+                Project.Instance.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
 			}
 			catch
 			{
@@ -422,7 +417,7 @@ namespace MinishMaker.UI
 				var warp = warpDataList[warpIndex];
 				warp.destYPixel = newVal;
 				warpDataList[warpIndex] = warp;
-				MainWindow.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+                Project.Instance.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
 			}
 			catch
 			{
@@ -441,7 +436,7 @@ namespace MinishMaker.UI
 				var warp = warpDataList[warpIndex];
 				warp.destArea = newVal;
 				warpDataList[warpIndex] = warp;
-				MainWindow.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+                Project.Instance.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
 			}
 			catch
 			{
@@ -460,7 +455,7 @@ namespace MinishMaker.UI
 				var warp = warpDataList[warpIndex];
 				warp.destRoom = newVal;
 				warpDataList[warpIndex] = warp;
-				MainWindow.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+                Project.Instance.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
 			}
 			catch
 			{
@@ -479,7 +474,7 @@ namespace MinishMaker.UI
 				var warp = warpDataList[warpIndex];
 				warp.exitHeight = newVal;
 				warpDataList[warpIndex] = warp;
-				MainWindow.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+                Project.Instance.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
 			}
 			catch
 			{
@@ -498,7 +493,7 @@ namespace MinishMaker.UI
 				var warp = warpDataList[warpIndex];
 				warp.warpType = newVal;
 				warpDataList[warpIndex] = warp;
-				MainWindow.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+                Project.Instance.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
 			}
 			catch
 			{
@@ -514,7 +509,7 @@ namespace MinishMaker.UI
 				var warp = warpDataList[warpIndex];
 				warp.warpVar = newVal;
 				warpDataList[warpIndex] = warp;
-				MainWindow.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+                Project.Instance.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
 			}
 			catch
 			{
@@ -531,7 +526,7 @@ namespace MinishMaker.UI
 				warp.warpYPixel = newVal;
 				warpDataList[warpIndex] = warp;
 				SetData();
-				MainWindow.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+                Project.Instance.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
 			}
 			catch
 			{
@@ -548,7 +543,7 @@ namespace MinishMaker.UI
 				warp.warpXPixel = newVal;
 				warpDataList[warpIndex] = warp;
 				SetData();
-				MainWindow.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+                Project.Instance.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
 			}
 			catch
 			{
@@ -567,9 +562,9 @@ namespace MinishMaker.UI
             if (warpDataList.Count == 0)
                 warpIndex = -1;
 
-			MainWindow.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+            Project.Instance.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
 			var data = new byte[20] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-			warpDataList.Insert(warpIndex+1,new WarpData(data,0)); //add an empty warp
+			warpDataList.Insert(warpIndex+1,new RoomMetaData.WarpData(data,0)); //add an empty warp
 			warpIndex +=1;
 			SetData();
 		}
@@ -581,7 +576,7 @@ namespace MinishMaker.UI
 				return;
 			}
 
-			MainWindow.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+            Project.Instance.AddPendingChange(new WarpDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
 			var warp = warpDataList[warpIndex];
 			warpDataList.Remove(warp);
 

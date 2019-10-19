@@ -1,10 +1,4 @@
-﻿using MinishMaker.UI;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace MinishMaker.Core
 {
@@ -82,7 +76,7 @@ namespace MinishMaker.Core
 			{
 				if(p>=16)
 				{
-					MainWindow.Notify("The room attempted to load more than 16 palettes, the room is highly likely invalid.","Invalid Room");
+					UI.MainWindow.Notify("The room attempted to load more than 16 palettes, the room is highly likely invalid.","Invalid Room");
 					break;
 				}
 				for( int i = 0; i < 0x10; i++ )

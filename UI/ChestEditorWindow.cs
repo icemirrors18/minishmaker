@@ -1,25 +1,16 @@
-﻿using MinishMaker.Core;
-using MinishMaker.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static MinishMaker.Core.RoomMetaData;
-using static MinishMaker.Core.Project;
+using MinishMaker.Core;
 using MinishMaker.Core.ChangeTypes;
+using MinishMaker.Utilities;
 
 namespace MinishMaker.UI
 {
 	public partial class ChestEditorWindow : Form
 	{
 		private int chestIndex = -1;
-		private List<ChestData> chestDataList;
+		private List<RoomMetaData.ChestData> chestDataList;
 		
 		
 		public ChestEditorWindow()
@@ -48,7 +39,7 @@ namespace MinishMaker.UI
 			}
 		}
 
-		public void SetData(List<ChestData> data)
+		public void SetData(List<RoomMetaData.ChestData> data)
 		{
 			this.chestDataList = data;
 											 
@@ -154,8 +145,8 @@ namespace MinishMaker.UI
 
             indexLabel.Text = StringUtil.AsStringHex2(chestIndex);
 
-            MainWindow.AddPendingChange(new ChestDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
-            MainWindow.currentRoom.AddChestData(new ChestData(0x02, 0, 0, 0, 0, 0));
+            Project.Instance.AddPendingChange(new ChestDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+            MainWindow.currentRoom.AddChestData(new RoomMetaData.ChestData(0x02, 0, 0, 0, 0, 0));
             LoadChestData(chestIndex);
 
             // Don't enable the previous button if there weren't previously any chests
@@ -174,7 +165,7 @@ namespace MinishMaker.UI
                 return;
             }
 
-            MainWindow.AddPendingChange(new ChestDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+            Project.Instance.AddPendingChange(new ChestDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
             MainWindow.currentRoom.RemoveChestData(chestDataList[chestIndex]);
 
 			newButton.Enabled=true;
@@ -231,7 +222,7 @@ namespace MinishMaker.UI
 
         private void LoadChestData(int chest)
         {
-            ChestData chestData = chestDataList[chest];
+            RoomMetaData.ChestData chestData = chestDataList[chest];
             entityType.Text = StringUtil.AsStringHex2(chestData.type);
 
             if ((TileEntityType)chestData.type == TileEntityType.Chest || (TileEntityType)chestData.type == TileEntityType.BigChest)
@@ -286,7 +277,7 @@ namespace MinishMaker.UI
 				if(type == chest.type)
 					return;
 
-                MainWindow.AddPendingChange(new ChestDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+                Project.Instance.AddPendingChange(new ChestDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
 
                 chest.type = type;
 			}
@@ -311,7 +302,7 @@ namespace MinishMaker.UI
 				if(chestId == chest.chestId)
 					return;
 
-                MainWindow.AddPendingChange(new ChestDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+                Project.Instance.AddPendingChange(new ChestDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
 
                 chest.chestId = chestId;
 			}
@@ -337,7 +328,7 @@ namespace MinishMaker.UI
 				if(location == chest.chestLocation)
 					return;
 
-                MainWindow.AddPendingChange(new ChestDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+                Project.Instance.AddPendingChange(new ChestDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
 
                 chest.chestLocation = location;
 			}
@@ -365,7 +356,7 @@ namespace MinishMaker.UI
 				if(location == chest.chestLocation)
 					return;
 
-                MainWindow.AddPendingChange(new ChestDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+                Project.Instance.AddPendingChange(new ChestDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
 
                 chest.chestLocation = location;
 			}
@@ -390,7 +381,7 @@ namespace MinishMaker.UI
 			if(type == chest.itemSubNumber)
 				return;
 
-            MainWindow.AddPendingChange(new ChestDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+            Project.Instance.AddPendingChange(new ChestDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
 
             itemAmount.Text = type.ToString();
 			chest.itemSubNumber = type;
@@ -411,7 +402,7 @@ namespace MinishMaker.UI
 				if(type == chest.itemSubNumber)
 					return;
 
-                MainWindow.AddPendingChange(new ChestDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+                Project.Instance.AddPendingChange(new ChestDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
 
                 chest.itemSubNumber = type;
 				kinstoneType.SelectedValue = (KinstoneType)type;
@@ -436,7 +427,7 @@ namespace MinishMaker.UI
 			if((int)value == chest.itemId)
 				return;
 
-            MainWindow.AddPendingChange(new ChestDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+            Project.Instance.AddPendingChange(new ChestDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
 
             chest.itemId = (byte)value;
 			chestDataList[chestIndex]=chest;
@@ -471,7 +462,7 @@ namespace MinishMaker.UI
                 if (extraval == chest.itemSubNumber)
                     return;
 
-                MainWindow.AddPendingChange(new ChestDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
+                Project.Instance.AddPendingChange(new ChestDataChange(MainWindow.currentArea, MainWindow.currentRoom.Index));
 
                 chest.unknown = extraval;
             }

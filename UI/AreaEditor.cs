@@ -1,16 +1,12 @@
-﻿using MinishMaker.Core;
-using MinishMaker.Core.ChangeTypes;
-using MinishMaker.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using MinishMaker.Core;
+using MinishMaker.Core.ChangeTypes;
+using MinishMaker.Utilities;
 
 namespace MinishMaker.UI
 {
@@ -247,7 +243,7 @@ namespace MinishMaker.UI
 				var room = MapManager.Instance.FindRoom(currentArea,selectedRoomRect);
 				room.SetMapPosition(x,y);
 
-				MainWindow.AddPendingChange(new RoomMetadataChange(currentArea, selectedRoomRect));//TODO
+                Project.Instance.AddPendingChange(new RoomMetadataChange(currentArea, selectedRoomRect));
 
 			}
 		}
@@ -281,7 +277,7 @@ namespace MinishMaker.UI
 			var spot = maps.IndexOf(ar);
 			ar.areaInfo = data;
 			maps[spot]=ar;
-			MainWindow.AddPendingChange(new AreaInfoChange(currentArea));
+            Project.Instance.AddPendingChange(new AreaInfoChange(currentArea));
 		}
 	}
 }

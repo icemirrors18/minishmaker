@@ -1,14 +1,10 @@
 ﻿using MinishMaker.Core.ChangeTypes;
-using MinishMaker.UI;
 using MinishMaker.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 
 namespace MinishMaker.Core
 {
@@ -29,7 +25,7 @@ namespace MinishMaker.Core
 	}
 
     /// <summary>
-    /// Stores configuration for a minishmaker project
+    /// Stores configuration for a Minish Maker project
     /// </summary>
     public class Project
     {
@@ -41,7 +37,8 @@ namespace MinishMaker.Core
         public string projectPath { get; private set; }
 
         private List<Change> loadedChanges;
-		private StreamWriter mainWriter;
+        private List<Change> pendingRomChanges;
+        private StreamWriter mainWriter;
         private ROM ROM_;
 
         // Create mode
@@ -71,6 +68,7 @@ namespace MinishMaker.Core
             ROM_ = new ROM(projectPath + "/baserom.gba");
 
             loadedChanges = new List<Change>();
+            pendingRomChanges = new List<Change>();
             LoadProject();
         }
 
@@ -91,6 +89,7 @@ namespace MinishMaker.Core
             ROM_ = new ROM(projectPath + "/baserom.gba");
 
             loadedChanges = new List<Change>();
+            pendingRomChanges = new List<Change>();
             LoadProject();
         }
 
@@ -320,15 +319,34 @@ namespace MinishMaker.Core
 					return null;
 			}
 		}
-		public void StartSave()
-		{
-			mainWriter = File.AppendText(projectPath+"/Main.event");
-		}
 
-		public void EndSave()
+        public void AddPendingChange(Change change)
+        {
+            if (!pendingRomChanges.Any(x => x.Compare(change))) //change does not yet exist
+            {
+                pendingRomChanges.Add(change);
+            }
+        }
+
+        public void StartSave()
+        {
+            mainWriter = File.AppendText(projectPath + "/Main.event");
+        }
+
+        public void EndSave()
+        {
+            mainWriter.Dispose();
+        }
+
+        public void Save()
 		{
-			mainWriter.Dispose();
-		}
+            while (pendingRomChanges.Count > 0)
+            {
+                Change data = pendingRomChanges.ElementAt(0);
+                SaveChange(data);
+                pendingRomChanges.RemoveAt(0);
+            }
+        }
 
         public void SaveChange(Change change)
         {

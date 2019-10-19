@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using MinishMaker.Core;
-using MinishMaker.Utilities;
 using System.Drawing;
+using MinishMaker.Core;
 using MinishMaker.Core.ChangeTypes;
 using MinishMaker.Properties;
+using MinishMaker.Utilities;
 
 
 namespace MinishMaker.UI
@@ -33,7 +30,6 @@ namespace MinishMaker.UI
 		public static int currentArea = -1;
 		private int selectedTileData = -1;
 		private int selectedLayer = 2; //start with bg2
-		private static List<Change> pendingRomChanges;
         private Point lastTilePos;
 	    private ViewLayer viewLayer = 0;
 
@@ -97,6 +93,8 @@ namespace MinishMaker.UI
 
         private void UpdateWindowTitle()
         {
+            string title = ProductName;
+
 #if DEBUG
             this.Text = $"{ProductName} {AssemblyInfo.GetGitTag()} DEBUG-{AssemblyInfo.GetGitHash()}";
 #else
@@ -365,7 +363,6 @@ namespace MinishMaker.UI
             currentArea = -1;
             selectedTileData = -1;
             selectedLayer = 2;
-            pendingRomChanges = new List<Change>();
             LoadMaps();
         }
 
@@ -654,27 +651,14 @@ namespace MinishMaker.UI
 			if(Project.Instance==null)
 				return;
 
-			Project.Instance.StartSave();
-
-            while (pendingRomChanges.Count > 0)
-            {
-                Change data = pendingRomChanges.ElementAt(0);
-                Project.Instance.SaveChange(data);
-                pendingRomChanges.RemoveAt(0);
-            }
-
+            Project.Instance.StartSave();
+			Project.Instance.Save();
             Project.Instance.EndSave();
 
             MessageBox.Show("Project Saved");
         }
 
-		public static void AddPendingChange(Change change)
-		{
-			if(!pendingRomChanges.Any(x=>x.Compare(change))) //change does not yet exist
-				pendingRomChanges.Add(change);
-		}
-
-		public void HighlightChest(int tileX, int tileY)
+        public void HighlightChest(int tileX, int tileY)
 		{
 			mapGridBox.chestHighlightPoint = new Point(tileX,tileY);
 			mapGridBox.Invalidate();
@@ -823,12 +807,13 @@ namespace MinishMaker.UI
             if (layer == 1 && currentRoom.Bg1Exists)
             {
                 currentRoom.DrawTile(ref mapLayers[0], p, currentArea, selectedLayer, tileData);
-                AddPendingChange(new Bg1DataChange(currentArea,currentRoom.Index));
+
+                Project.Instance.AddPendingChange(new Bg1DataChange(currentArea,currentRoom.Index));
             }
             else if (layer == 2 && currentRoom.Bg2Exists)
             {
                 currentRoom.DrawTile(ref mapLayers[1], p, currentArea, selectedLayer, tileData);
-                AddPendingChange(new Bg2DataChange(currentArea,currentRoom.Index));
+                Project.Instance.AddPendingChange(new Bg2DataChange(currentArea,currentRoom.Index));
             }
 
             currentRoom.SetTileData(selectedLayer, pos * 2, selectedTileData);

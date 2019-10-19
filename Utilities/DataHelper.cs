@@ -1,18 +1,13 @@
-﻿using MinishMaker.Utilities;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static MinishMaker.Core.RoomMetaData;
+using MinishMaker.Utilities;
 
 namespace MinishMaker.Core
 {
 	public class DataHelper
 	{
 
-		public static byte[] GetData( AddrData addrData )
+		public static byte[] GetData( RoomMetaData.AddrData addrData )
 		{
 			if( addrData.compressed )
 			{

@@ -1,11 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 using System.IO;
-using static MinishMaker.Core.RoomMetaData;
 using System.Drawing.Imaging;
 
 namespace MinishMaker.Core
@@ -19,7 +15,7 @@ namespace MinishMaker.Core
             get { return tilesetData.Length / 0x20; }
         }
 
-        public TileSet(List<AddrData> tileSetAddrs)
+        public TileSet(List<RoomMetaData.AddrData> tileSetAddrs)
         {
             byte[] tilesetData = new byte[0x10000];
 			using( MemoryStream ms = new MemoryStream( tilesetData ) )
