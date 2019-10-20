@@ -34,7 +34,7 @@ namespace MinishMaker.UI
         {
             CommonOpenFileDialog ofd = new CommonOpenFileDialog()
             {
-                
+
                 IsFolderPicker = true,
                 Title = "Select project root folder"
             };
