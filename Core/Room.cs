@@ -72,7 +72,7 @@ namespace MinishMaker.Core
 
             if (!bg1Exists && !bg2Exists)
             {
-                UI.MainWindow.Notify("No layers exist for this room, the room is highly likely invalid.", "Invalid Room");
+                throw new RoomException("No layers exist for this room, the room is highly likely invalid.");
             }
 
             Loaded = true; //do not load data a 2nd time for this room
@@ -162,7 +162,7 @@ namespace MinishMaker.Core
             }
             if (badTiles > 0)
             {
-                UI.MainWindow.Notify("Found " + badTiles + " bad tiles while trying to draw them, the room may be unused.", "Bad Tiles");
+                throw new RoomException("Found " + badTiles + " bad tiles while trying to draw them, the room may be unused.");
             }
         }
 
@@ -248,6 +248,7 @@ namespace MinishMaker.Core
             }
             if (updatepal > 0) //if the palette number changed due to swapping, create new paletteset
             {
+
                 pset = new PaletteSet(updatepal);
             }
         }
@@ -542,5 +543,12 @@ namespace MinishMaker.Core
                 metadata.mapPosY = y;
             }
         }
+    }
+
+    public class RoomException : Exception
+    {
+        public RoomException() { }
+        public RoomException(string message) : base(message) { }
+        public RoomException(string message, Exception inner) : base(message, inner) { }
     }
 }
